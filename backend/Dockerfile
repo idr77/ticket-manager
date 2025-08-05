@@ -2,7 +2,7 @@ FROM eclipse-temurin:24-jdk-alpine
 
 WORKDIR /app
 
-COPY target/ticket-manager.jar app.jar
+COPY target/backend*.jar app.jar
 
 EXPOSE 8080
 

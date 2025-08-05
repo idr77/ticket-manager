@@ -1,0 +1,10 @@
+<div class="register-container">
+  <h2>Register</h2>
+  <input [(ngModel)]="email" placeholder="Email" type="email" />
+  <input [(ngModel)]="password" placeholder="Password" type="password" />
+  <input [(ngModel)]="confirmPassword" placeholder="Confirm Password" type="password" />
+  <button (click)="register()">Register</button>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+  <p *ngIf="success" class="success">{{ success }}</p>
+</div>

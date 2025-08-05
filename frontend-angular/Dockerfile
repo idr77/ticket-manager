@@ -1,15 +1,27 @@
-FROM node:20-alpine
+# Étape 1 : build Angular app
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
+# Copier les fichiers nécessaires pour le build
 COPY package*.json ./
 RUN npm install
 
 COPY . .
+RUN npm run build -- --configuration production
 
-RUN npm run build --prod
+# Étape 2 : serveur nginx
+FROM nginx:stable-alpine
 
-RUN npm install -g http-server
+# Supprimer la config par défaut de NGINX
+RUN rm -rf /usr/share/nginx/html/*
 
-EXPOSE 4200
-CMD ["http-server", "dist", "-p", "4200"]
+# Copier les fichiers buildés d'Angular vers nginx
+COPY --from=build /app/dist/frontend-angular /usr/share/nginx/html
+
+# Copier une config nginx personnalisée (optionnel)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

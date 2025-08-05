@@ -1,0 +1,28 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  .App {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  header {
+    background-color: #282c34;
+    padding: 1rem;
+    color: white;
+  }
+  
+  nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #61dafb;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  

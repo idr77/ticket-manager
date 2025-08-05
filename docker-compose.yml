@@ -1,6 +1,5 @@
-version: '3.8'
-
 services:
+
   backend:
     build:
       context: ./backend
@@ -11,35 +10,41 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/ticketdb
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
-      - JWT_SECRET=VerySecretKey1234567890
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
     depends_on:
       - db
-
-  frontend-react:
-    build:
-      context: ./frontend-react
-    container_name: ticket-frontend-react
-    ports:
-      - "3000:3000"
-
-  frontend-angular:
-    build:
-      context: ./frontend-angular
-    container_name: ticket-frontend-angular
-    ports:
-      - "4200:4200"
 
   db:
     image: postgres:15
     container_name: ticket-db
+    restart: always
     environment:
-      POSTGRES_DB: ticketdb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ticketdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+
+  frontend-react:
+    build:
+      context: ./frontend-react
+    container_name: ticket-react
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  frontend-angular:
+    build:
+      context: ./frontend-angular
+    container_name: ticket-angular
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
 
 volumes:
-  pgdata:
+  postgres_data:
