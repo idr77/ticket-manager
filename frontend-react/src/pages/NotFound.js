@@ -1,0 +1,8 @@
+// Page 404 si route invalide
+import React from 'react';
+
+function NotFound() {
+  return <h2>404 - Page not found</h2>;
+}
+
+export default NotFound;
