@@ -37,7 +37,9 @@
 ticket-manager/
 ├── backend/
 │   └── src/... (Spring Boot with REST API, Auth, etc.)
-├── frontend/
+├── frontend-angular/
+│   └── src/... (Angular UI, Auth pages, Dashboard)
+├── frontend-react/
 │   └── src/... (React UI, Auth pages, Dashboard)
 ├── docker-compose.yml
 ├── README.md
@@ -48,16 +50,16 @@ ticket-manager/
 
 ## 📦 Setup (Local)
 
-### Prérequis
+### Pre-requisite
 - Docker & Docker Compose
 
-### Lancer le projet
+### Launch the project
 ```bash
 git clone https://github.com/tonprofil/ticket-manager.git
 cd ticket-manager
 docker-compose up --build
 ```
-Accès :
+Access :
 - Frontend : http://localhost:3000
 - Backend API : http://localhost:8080/api
 
@@ -94,7 +96,7 @@ REACT_APP_API_URL=https://<render-backend-url>/api
 
 ---
 
-## ✅ Exemple de comptes
+## ✅ Account examples
 
 - user@example.com / password → USER
 - admin@example.com / adminpass → ADMIN
@@ -107,21 +109,13 @@ REACT_APP_API_URL=https://<render-backend-url>/api
 - 🔐 Login/Register
 - 📊 Dashboard
 
-(à compléter avec captures dans `/frontend/public/screenshots/`)
+---
+
+## 📌 TODO
+
 
 ---
 
-## 📌 À venir / TODO
+## 👨‍💻 Author
 
-- Pagination des tickets
-- Upload de pièces jointes
-- Export CSV / PDF
-- OAuth2 / SSO (Google, Azure)
-
----
-
-## 👨‍💻 Auteur
-
-Eric Diallo — [LinkedIn](https://linkedin.com/in/eric...) | [GitHub](https://github.com/tonprofil)
-
-N’hésitez pas à ⭐️ ce repo si le projet vous inspire !
+Eric Diallo — [LinkedIn](https://linkedin.com/in/eric-diallo-52b41b103) | [GitHub](https://github.com/idr77)
