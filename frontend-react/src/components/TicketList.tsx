@@ -3,8 +3,14 @@ import React, { useEffect, useState } from 'react';
 import './TicketList.css';
 import { getTickets } from '../services/ticketService';
 
-function TicketList() {
-  const [tickets, setTickets] = useState([]);
+interface Ticket {
+  id: number;
+  title: string;
+  status: string;
+}
+
+function TicketList(): JSX.Element {
+  const [tickets, setTickets] = useState<Ticket[]>([]);
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -23,7 +29,7 @@ function TicketList() {
     <div className="ticket-list-container">
       <h2>Your Tickets</h2>
       <ul>
-        {tickets.map((ticket) => (
+        {tickets.map((ticket: Ticket) => (
           <li key={ticket.id}>{ticket.title} - {ticket.status}</li>
         ))}
       </ul>

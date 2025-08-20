@@ -1,13 +1,13 @@
 // Formulaire de connexion utilisateur
 import React, { useState } from 'react';
-import './Login.css'; // 1. Importer le fichier CSS
+import './Login.css';
 import { login } from '../services/authService';
 
-function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+function LoginForm(): JSX.Element {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const data = await login({ email, password });
@@ -21,12 +21,11 @@ function LoginForm() {
   };
 
   return (
-    // 2. Utiliser la classe CSS parente et la bonne balise de titre
     <div className="login-container">
       <form onSubmit={handleLogin}>
         <h2>Login</h2>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+        <input type="email" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} placeholder="Email" required />
+        <input type="password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
     </div>

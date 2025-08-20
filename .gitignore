@@ -72,3 +72,4 @@ backend/logs/*.log.*.*
 
 .angular/
 dist/
+frontend-react/package-lock.json
