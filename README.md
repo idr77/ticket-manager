@@ -10,7 +10,7 @@
 - User roles: `USER`, `ADMIN`
 - CRUD for support tickets
 - REST API secured with Spring Security
-- Responsive frontend with React (or Angular)
+- Responsive frontends with React and Angular
 - Dashboard with statistics (tickets by status)
 - Dockerized stack: Backend, Frontend, DB (PostgreSQL)
 - GitHub Actions CI pipeline
@@ -20,9 +20,9 @@
 
 ## 🧰 Tech Stack
 
-| Layer       | Technology                      |
+| Layer       | Technology                       |
 |-------------|----------------------------------|
-| Frontend    | React (or Angular), Chart.js     |
+| Frontend    | React, Angular                   |
 | Backend     | Spring Boot (or Quarkus)         |
 | Auth        | JWT, Spring Security             |
 | DB          | PostgreSQL (via Docker)          |
@@ -65,37 +65,6 @@ Access :
 
 ---
 
-## 🌐 Deployment Guide
-
-### 🔷 Render (Backend Java)
-1. Crée un service Web → connecte le repo GitHub → choisis `backend/`
-2. Définis la commande de build :
-```bash
-./mvnw clean install
-```
-3. Commande de start :
-```bash
-java -jar target/*.jar
-```
-4. Ajoute les variables d’env. dans Render :
-- `JWT_SECRET`
-- `SPRING_DATASOURCE_URL`, etc.
-
-### 🔶 Railway (PostgreSQL)
-1. Crée un projet PostgreSQL
-2. Copie les identifiants dans `application.yml`
-3. Laisse Render accéder à Railway
-
-### ⚪ Vercel (Frontend React)
-1. Connecte le dossier `frontend/`
-2. Dans `.env`, configure :
-```env
-REACT_APP_API_URL=https://<render-backend-url>/api
-```
-3. Déploie. Le front pointera sur l’API sécurisée.
-
----
-
 ## ✅ Account examples
 
 - user@example.com / password → USER
@@ -103,7 +72,7 @@ REACT_APP_API_URL=https://<render-backend-url>/api
 
 ---
 
-## 🔍 Screenshots
+## 🔍 Screenshots (To Do)
 
 - 🧾 Tickets list
 - 🔐 Login/Register
@@ -112,8 +81,13 @@ REACT_APP_API_URL=https://<render-backend-url>/api
 ---
 
 ## 📌 TODO
-
-
+- Fix and test React frontend
+- Fix and test Angular frontend
+- Implement ticket search/filter functionality
+- Implement ticket assignment to users
+- Add real-time updates for ticket status/comments
+- Improve error handling and user feedback
+- Implement notifications for new tickets/comments
 ---
 
 ## 👨‍💻 Author
