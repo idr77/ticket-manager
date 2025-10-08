@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -11,17 +11,28 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   email = '';
   password = '';
   error = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
+  login(): void {
     this.authService.login(this.email, this.password).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
-      error: () => this.error = 'Invalid credentials'
+      next: () => {
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.error = 'Invalid credentials';
+        console.error(err);
+      }
     });
   }
 }
