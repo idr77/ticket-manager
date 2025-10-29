@@ -11,6 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class for handling authentication-related business logic.
+ * This includes user registration and login.
+ */
 @Service
 public class AuthService {
 
@@ -23,6 +27,13 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     * Registers a new user in the system.
+     *
+     * @param request The registration request containing the user's email and password.
+     * @return A JWT for the newly registered user.
+     * @throws IllegalArgumentException if the email is already in use.
+     */
     public String register(RegisterRequest request) {
         if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new IllegalArgumentException("Email already in use");
@@ -36,6 +47,14 @@ public class AuthService {
         return jwtUtil.generateToken(user);
     }
 
+    /**
+     * Authenticates a user and provides a JWT upon successful login.
+     *
+     * @param request The login request containing the user's email and password.
+     * @return A JWT for the authenticated user.
+     * @throws UsernameNotFoundException if no user is found with the given email.
+     * @throws BadCredentialsException if the provided password does not match.
+     */
     public String login(LoginRequest request) {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

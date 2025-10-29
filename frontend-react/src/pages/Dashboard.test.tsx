@@ -7,7 +7,7 @@ jest.mock('../services/ticketService');
 
 describe('Dashboard Page', () => {
   it('should display ticket statistics', async () => {
-    (ticketService.getTickets as jest.Mock).mockResolvedValue([
+    (ticketService.getAllTickets as jest.Mock).mockResolvedValue([
       { id: 1, title: 'Fix bug', status: 'OPEN' },
       { id: 2, title: 'UI update', status: 'CLOSED' },
     ]);

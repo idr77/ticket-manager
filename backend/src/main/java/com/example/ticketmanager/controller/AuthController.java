@@ -36,7 +36,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
-            return ResponseEntity.ok(authService.register(request));
+            String token = authService.register(request);
+            return ResponseEntity.ok(java.util.Map.of("token", token));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -55,6 +56,7 @@ public class AuthController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
+        String token = authService.login(request);
+        return ResponseEntity.ok(java.util.Map.of("token", token));
     }
 }

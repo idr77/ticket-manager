@@ -72,7 +72,7 @@
     </scm>
 
     <properties>
-        <java.version>24</java.version>
+        <java.version>25</java.version>
         <spring.boot.version>4.0.0-M1</spring.boot.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <lombok.version>1.18.38</lombok.version>

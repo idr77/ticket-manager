@@ -17,6 +17,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+/**
+ * Configures the application's security settings using Spring Security.
+ * This class defines the security filter chain, CORS policy, password encoding, and other security-related beans.
+ */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
@@ -24,12 +28,21 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    /**
+     * Defines the main security filter chain for processing incoming HTTP requests.
+     * It configures CORS, disables CSRF, sets up session management, and defines authorization rules.
+     *
+     * @param http The HttpSecurity object to configure.
+     * @return The configured SecurityFilterChain.
+     * @throws Exception if an error occurs during configuration.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -37,11 +50,23 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Customizes web security by ignoring specific request matchers, such as those for Swagger UI.
+     * Requests to these paths will bypass the Spring Security filter chain completely.
+     *
+     * @return A WebSecurityCustomizer instance.
+     */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html");
+        return (web) -> web.ignoring().requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html");
     }
 
+    /**
+     * Configures the Cross-Origin Resource Sharing (CORS) policy for the application.
+     * It allows requests from specified origins (e.g., frontend applications) and defines allowed methods, headers, and credentials.
+     *
+     * @return A CorsConfigurationSource bean.
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -54,6 +79,12 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Provides a password encoder bean to be used for hashing and verifying passwords.
+     * Uses the BCrypt strong hashing function.
+     *
+     * @return A PasswordEncoder instance.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -10,6 +10,11 @@ import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
 
+/**
+ * Configures the OpenAPI (Swagger) documentation for the API.
+ * This class uses annotations to define the API's metadata, servers, and security schemes.
+ * The generated documentation can be accessed at /swagger-ui.html.
+ */
 @Configuration
 @OpenAPIDefinition(
     info = @Info(

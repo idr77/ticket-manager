@@ -1,7 +1,7 @@
 // Liste des tickets après authentification
 import React, { useEffect, useState } from 'react';
 import './TicketList.css';
-import { getTickets } from '../services/ticketService';
+import { getAllTickets } from '../services/ticketService';
 
 interface Ticket {
   id: number;
@@ -15,7 +15,7 @@ function TicketList(): JSX.Element {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const data = await getTickets();
+        const data = await getAllTickets();
         setTickets(data);
       } catch (error) {
         console.error('Failed to fetch tickets:', error);

@@ -10,9 +10,9 @@ function RegisterForm(): JSX.Element {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await register({ email, password });
-      alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
-      // Optionnel : rediriger vers la page de connexion
+      const data = await register({ email, password });
+      localStorage.setItem('token', data.token);
+      window.location.href = '/dashboard'; // Redirection vers le dashboard
     } catch (error) {
       console.error('Registration failed:', error);
       alert("L'inscription a échoué. Veuillez réessayer.");
