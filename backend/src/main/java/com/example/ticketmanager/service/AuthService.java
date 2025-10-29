@@ -24,6 +24,9 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     public String register(RegisterRequest request) {
+        if (userRepository.findByEmail(request.email()).isPresent()) {
+            throw new IllegalArgumentException("Email already in use");
+        }
         User user = User.builder()
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))

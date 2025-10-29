@@ -28,11 +28,18 @@ function TicketList(): JSX.Element {
   return (
     <div className="ticket-list-container">
       <h2>Your Tickets</h2>
-      <ul>
+      <div>
         {tickets.map((ticket: Ticket) => (
-          <li key={ticket.id}>{ticket.title} - {ticket.status}</li>
+          <div key={ticket.id} className={`ticket-card ${ticket.status.toLowerCase()}`}>
+            <div className="ticket-content">
+              <div className="ticket-title">{ticket.title}</div>
+            </div>
+            <div className={`ticket-status ${ticket.status.toLowerCase()}`}>
+              {ticket.status}
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
