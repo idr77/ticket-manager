@@ -1,10 +1,77 @@
-<div class="dashboard">
-    <h2>Dashboard</h2>
-    <ul>
-      <li><strong>Total Tickets:</strong> {{ totalTickets }}</li>
-      <li><strong>Open Tickets:</strong> {{ openTickets }}</li>
-      <li><strong>Closed Tickets:</strong> {{ closedTickets }}</li>
-    </ul>
+<div class="kanban-board" cdkDropListGroup>
+  <!-- To Do Column -->
+  <div class="kanban-column">
+    <h2 class="column-title">To Do</h2>
+    <div
+      id="todoList"
+      cdkDropList
+      [cdkDropListData]="todo"
+      class="ticket-list"
+      (cdkDropListDropped)="drop($event)">
+      <mat-card *ngFor="let ticket of todo" cdkDrag class="ticket-card">
+        <mat-card-header>
+          <mat-card-title>{{ ticket.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ ticket.description }}</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-icon-button (click)="openEditTicketDialog(ticket)"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="deleteTicket(ticket)"><mat-icon>delete</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
-  <app-ticket-list></app-ticket-list>
-  
+
+  <!-- In Progress Column -->
+  <div class="kanban-column">
+    <h2 class="column-title">In Progress</h2>
+    <div
+      id="inProgressList"
+      cdkDropList
+      [cdkDropListData]="inProgress"
+      class="ticket-list"
+      (cdkDropListDropped)="drop($event)">
+      <mat-card *ngFor="let ticket of inProgress" cdkDrag class="ticket-card">
+        <mat-card-header>
+          <mat-card-title>{{ ticket.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ ticket.description }}</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-icon-button (click)="openEditTicketDialog(ticket)"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="deleteTicket(ticket)"><mat-icon>delete</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Done Column -->
+  <div class="kanban-column">
+    <h2 class="column-title">Done</h2>
+    <div
+      id="doneList"
+      cdkDropList
+      [cdkDropListData]="done"
+      class="ticket-list"
+      (cdkDropListDropped)="drop($event)">
+      <mat-card *ngFor="let ticket of done" cdkDrag class="ticket-card">
+        <mat-card-header>
+          <mat-card-title>{{ ticket.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ ticket.description }}</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-icon-button (click)="openEditTicketDialog(ticket)"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="deleteTicket(ticket)"><mat-icon>delete</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<button mat-fab color="primary" class="add-ticket-fab" (click)="openAddTicketDialog()">
+  <mat-icon>add</mat-icon>
+</button>

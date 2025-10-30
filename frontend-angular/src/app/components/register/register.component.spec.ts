@@ -32,6 +32,6 @@ describe('RegisterComponent', () => {
 
     component.register();
 
-    expect(authServiceSpy.register).toHaveBeenCalledWith(user.email, user.password, 'USER');
+    expect(authServiceSpy.register).toHaveBeenCalledWith(user.email, user.password);
   });
 });

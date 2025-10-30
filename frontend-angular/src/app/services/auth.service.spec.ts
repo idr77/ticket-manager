@@ -28,7 +28,7 @@ describe('AuthService', () => {
   it('should register a user', () => {
     const dummyUser = { email: 'test@example.com', password: '123456' };
 
-    service.register(dummyUser.email, dummyUser.password, 'USER').subscribe(response => {
+    service.register(dummyUser.email, dummyUser.password).subscribe(response => {
       expect(response).toBeTruthy();
     });
 

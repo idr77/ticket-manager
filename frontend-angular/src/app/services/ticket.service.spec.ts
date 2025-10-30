@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TicketService } from './ticket.service';
+import { TicketService, Ticket } from './ticket.service';
 
 describe('TicketService', () => {
   let service: TicketService;
@@ -23,7 +23,12 @@ describe('TicketService', () => {
   });
 
   it('should fetch all tickets', () => {
-    const mockTickets = [{ id: 1, title: 'Test' }];
+    const mockTickets: Ticket[] = [{
+      id: '1',
+      title: 'Test Ticket',
+      description: 'This is a test ticket.',
+      status: 'TO_DO'
+    }];
 
     service.getAllTickets().subscribe(tickets => {
       expect(tickets.length).toBe(1);
