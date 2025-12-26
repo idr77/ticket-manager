@@ -43,9 +43,9 @@
     "ts-jest": "^27.1.5",
     "typescript": "^5.9.2"
   },
-  "overrides": {
-    "react-scripts": {
-      "typescript": "^5.9.2"
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
     }
   }
 }

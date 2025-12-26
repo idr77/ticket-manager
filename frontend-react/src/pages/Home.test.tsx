@@ -1,15 +1,16 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Home from './Home';
 
 describe('Home Page', () => {
-  it('should render welcome message', () => {
+  it('should render auth forms', () => {
     render(<Home />);
-    expect(screen.getByText(/welcome to ticket manager/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { name: /login/i })[0]).toBeInTheDocument();
   });
 
-  it('should have a CTA button or link', () => {
+  it('should switch between login and register', () => {
     render(<Home />);
-    expect(screen.getByRole('link', { name: /get started/i })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /register/i }));
+    expect(screen.getAllByRole('heading', { name: /register/i })[0]).toBeInTheDocument();
   });
 });

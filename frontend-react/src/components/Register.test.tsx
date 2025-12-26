@@ -13,14 +13,14 @@ describe('Register Component', () => {
 
     render(<Register />);
 
-    fireEvent.change(screen.getByLabelText(/email/i), {
+    fireEvent.change(screen.getByPlaceholderText(/email/i), {
       target: { value: 'test@example.com' },
     });
-    fireEvent.change(screen.getByLabelText(/password/i), {
+    fireEvent.change(screen.getByPlaceholderText(/password/i), {
       target: { value: 'password123' },
     });
 
-    fireEvent.click(screen.getByText(/register/i));
+    fireEvent.click(screen.getByRole('button', { name: /register/i }));
 
     expect(registerMock).toHaveBeenCalledWith({
       email: 'test@example.com',

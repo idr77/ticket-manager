@@ -15,8 +15,8 @@ describe('Dashboard Page', () => {
     render(<Dashboard />);
 
     await waitFor(() => {
-      expect(screen.getByText(/open tickets/i)).toBeInTheDocument();
-      expect(screen.getByText(/closed tickets/i)).toBeInTheDocument();
+      expect(screen.getByText(/to do/i)).toBeInTheDocument();
+      expect(screen.getByText(/done/i)).toBeInTheDocument();
     });
   });
 });

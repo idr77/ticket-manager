@@ -13,10 +13,10 @@ describe('Login Component', () => {
 
     render(<Login />);
 
-    fireEvent.change(screen.getByLabelText(/email/i), {
+    fireEvent.change(screen.getByPlaceholderText(/email/i), {
       target: { value: 'user@example.com' },
     });
-    fireEvent.change(screen.getByLabelText(/password/i), {
+    fireEvent.change(screen.getByPlaceholderText(/password/i), {
       target: { value: '123456' },
     });
 

@@ -13,8 +13,7 @@ describe('RegisterComponent', () => {
     const spy = jasmine.createSpyObj('AuthService', ['register']);
 
     TestBed.configureTestingModule({
-      declarations: [RegisterComponent],
-      imports: [FormsModule],
+      imports: [FormsModule, RegisterComponent],
       providers: [{ provide: AuthService, useValue: spy }]
     });
 
