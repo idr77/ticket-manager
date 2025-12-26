@@ -73,3 +73,6 @@ backend/logs/*.log.*.*
 .angular/
 dist/
 frontend-react/package-lock.json
+frontend-react/package-lock.json
+frontend-angular/test_output_ng.txt
+frontend-react/test_output.txt
