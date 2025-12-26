@@ -18,24 +18,27 @@ public class JwtUtil {
 
     /**
      * The secret key used for signing and verifying JWTs.
-     * This value is injected from the application's configuration properties (e.g., application.properties).
+     * This value is injected from the application's configuration properties (e.g.,
+     * application.properties).
      */
     @Value("${JWT_SECRET}")
     private String jwtSecret;
 
     /**
      * Generates a signed JWT for a given user.
-     * The token contains the user's email as the subject and their role as a claim, and is valid for 24 hours.
+     * The token contains the user's email as the subject and their role as a claim,
+     * and is valid for 24 hours.
      *
-     * @param user The user entity for whom the token will be generated. Must not be null.
+     * @param user The user entity for whom the token will be generated. Must not be
+     *             null.
      * @return A compact, URL-safe, signed JWT string.
      */
     public String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .subject(user.getEmail())
                 .claim("role", user.getRole())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
@@ -47,11 +50,11 @@ public class JwtUtil {
      * @return The username (email) extracted from the token's subject claim.
      */
     public String extractUsername(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8))) // Secure the key
+        return Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8))) // Secure the key
                 .build()
-                .parseClaimsJws(token)
-                .getBody()
+                .parseSignedClaims(token)
+                .getPayload()
                 .getSubject();
     }
 }
