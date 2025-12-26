@@ -35,6 +35,17 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>npm test</id>
+                        <goals><goal>npm</goal></goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>test</arguments>
+                            <environmentVariables>
+                                <CI>true</CI>
+                            </environmentVariables>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>npm build</id>
                         <goals><goal>npm</goal></goals>
                         <configuration>

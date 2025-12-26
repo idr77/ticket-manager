@@ -5,7 +5,7 @@
     "start": "npm run build && serve -s build",
     "build": "react-scripts build",
     "dev": "react-scripts start",
-    "test": "jest",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -17,8 +17,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.22.0",
     "react-scripts": "^5.0.1",
-    "serve": "^14.2.0",
-    "ts-jest": "^29.4.1"
+    "serve": "^14.2.0"
   },
   "browserslist": {
     "production": [
@@ -35,16 +34,14 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.3.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.126",
     "@types/react": "^18.2.0",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.0",
     "@types/react-modal": "^3.16.3",
+    "ts-jest": "^27.1.5",
     "typescript": "^5.9.2"
-  },
-  "jest": {
-    "testEnvironment": "jsdom"
   },
   "overrides": {
     "react-scripts": {
