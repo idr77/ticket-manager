@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
@@ -73,7 +73,7 @@
 
     <properties>
         <java.version>25</java.version>
-        <spring.boot.version>4.0.0-M1</spring.boot.version>
+        <spring.boot.version>4.0.1</spring.boot.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <lombok.version>1.18.42</lombok.version>
     </properties>

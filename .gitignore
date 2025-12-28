@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+*.txt
 
 # BlueJ files
 *.ctxt
@@ -76,3 +77,4 @@ frontend-react/package-lock.json
 frontend-react/package-lock.json
 frontend-angular/test_output_ng.txt
 frontend-react/test_output.txt
+frontend-angular/package-lock.json
