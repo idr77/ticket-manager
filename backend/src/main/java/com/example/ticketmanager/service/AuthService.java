@@ -5,7 +5,6 @@ import com.example.ticketmanager.dto.RegisterRequest;
 import com.example.ticketmanager.entity.User;
 import com.example.ticketmanager.repository.UserRepository;
 import com.example.ticketmanager.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,19 +17,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
 
     /**
      * Registers a new user in the system.
      *
-     * @param request The registration request containing the user's email and password.
+     * @param request The registration request containing the user's email and
+     *                password.
      * @return A JWT for the newly registered user.
      * @throws IllegalArgumentException if the email is already in use.
      */
@@ -53,7 +54,7 @@ public class AuthService {
      * @param request The login request containing the user's email and password.
      * @return A JWT for the authenticated user.
      * @throws UsernameNotFoundException if no user is found with the given email.
-     * @throws BadCredentialsException if the provided password does not match.
+     * @throws BadCredentialsException   if the provided password does not match.
      */
     public String login(LoginRequest request) {
         User user = userRepository.findByEmail(request.email())

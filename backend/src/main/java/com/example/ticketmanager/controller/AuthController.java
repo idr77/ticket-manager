@@ -1,6 +1,5 @@
 package com.example.ticketmanager.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.ticketmanager.dto.LoginRequest;
 import com.example.ticketmanager.dto.RegisterRequest;
 import com.example.ticketmanager.service.AuthService;
+import java.util.Map;
 
 /**
  * REST controller for authentication operations.
@@ -19,11 +19,15 @@ import com.example.ticketmanager.service.AuthService;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     /**
      * Registers a new user.
+     * 
      * @param request Registration request data.
      * @return Success message or error.
      *
@@ -34,17 +38,18 @@ public class AuthController {
      * @apiSuccess {String} message Registration result.
      */
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest request) {
         try {
             String token = authService.register(request);
             return ResponseEntity.ok(java.util.Map.of("token", token));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(java.util.Map.of("error", e.getMessage()));
         }
     }
 
     /**
      * Authenticates a user and returns a JWT token.
+     * 
      * @param request Login request data.
      * @return JWT token or error.
      *
@@ -55,7 +60,7 @@ public class AuthController {
      * @apiSuccess {String} token JWT token.
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest request) {
         String token = authService.login(request);
         return ResponseEntity.ok(java.util.Map.of("token", token));
     }

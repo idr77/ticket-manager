@@ -7,7 +7,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,27 +18,32 @@ import java.util.List;
 
 /**
  * A servlet filter that intercepts incoming HTTP requests to validate JWTs.
- * This filter is executed once per request and is responsible for authenticating users
+ * This filter is executed once per request and is responsible for
+ * authenticating users
  * based on the 'Authorization' header.
  */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public JwtFilter(JwtUtil jwtUtil, UserRepository userRepository) {
+        this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
+    }
 
     /**
-     * Processes an incoming HTTP request to check for a valid JWT in the 'Authorization' header.
-     * If a valid token is found, it sets the user's authentication details in the Spring Security context.
+     * Processes an incoming HTTP request to check for a valid JWT in the
+     * 'Authorization' header.
+     * If a valid token is found, it sets the user's authentication details in the
+     * Spring Security context.
      *
-     * @param request The incoming HttpServletRequest.
+     * @param request  The incoming HttpServletRequest.
      * @param response The outgoing HttpServletResponse.
-     * @param chain The filter chain to pass the request along.
+     * @param chain    The filter chain to pass the request along.
      * @throws ServletException if a servlet-specific error occurs.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException      if an I/O error occurs.
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -59,13 +63,13 @@ public class JwtFilter extends OncePerRequestFilter {
                     // Create authentication token
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             email, null, List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole())));
-                    
+
                     // Set the authentication in the security context
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
         }
-        
+
         // Continue the filter chain
         chain.doFilter(request, response);
     }

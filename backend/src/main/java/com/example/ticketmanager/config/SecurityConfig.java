@@ -1,6 +1,5 @@
 package com.example.ticketmanager.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -19,18 +18,23 @@ import java.util.Arrays;
 
 /**
  * Configures the application's security settings using Spring Security.
- * This class defines the security filter chain, CORS policy, password encoding, and other security-related beans.
+ * This class defines the security filter chain, CORS policy, password encoding,
+ * and other security-related beans.
  */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private JwtFilter jwtFilter;
+    private final JwtFilter jwtFilter;
+
+    public SecurityConfig(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
 
     /**
      * Defines the main security filter chain for processing incoming HTTP requests.
-     * It configures CORS, disables CSRF, sets up session management, and defines authorization rules.
+     * It configures CORS, disables CSRF, sets up session management, and defines
+     * authorization rules.
      *
      * @param http The HttpSecurity object to configure.
      * @return The configured SecurityFilterChain.
@@ -40,30 +44,34 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable()) // CSRF is disabled as we use stateless JWT authentication which is not
+                                              // vulnerable to CSRF when not using cookies.
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
     /**
-     * Customizes web security by ignoring specific request matchers, such as those for Swagger UI.
-     * Requests to these paths will bypass the Spring Security filter chain completely.
+     * Customizes web security by ignoring specific request matchers, such as those
+     * for Swagger UI.
+     * Requests to these paths will bypass the Spring Security filter chain
+     * completely.
      *
      * @return A WebSecurityCustomizer instance.
      */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html");
+        return web -> web.ignoring().requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html");
     }
 
     /**
-     * Configures the Cross-Origin Resource Sharing (CORS) policy for the application.
-     * It allows requests from specified origins (e.g., frontend applications) and defines allowed methods, headers, and credentials.
+     * Configures the Cross-Origin Resource Sharing (CORS) policy for the
+     * application.
+     * It allows requests from specified origins (e.g., frontend applications) and
+     * defines allowed methods, headers, and credentials.
      *
      * @return A CorsConfigurationSource bean.
      */
@@ -80,7 +88,8 @@ public class SecurityConfig {
     }
 
     /**
-     * Provides a password encoder bean to be used for hashing and verifying passwords.
+     * Provides a password encoder bean to be used for hashing and verifying
+     * passwords.
      * Uses the BCrypt strong hashing function.
      *
      * @return A PasswordEncoder instance.
